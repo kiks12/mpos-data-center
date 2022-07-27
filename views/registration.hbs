@@ -9,7 +9,7 @@
   <body>
     <main class="d-flex justify-content-center">
       <div class="w-50">
-        <form action="registration/create/" method="post" class="container p-4 m-5">
+        <form id="form" class="container p-4 m-5">
           <h2>Registration</h2>
           <p class="text-muted">Create an Account</p>
 
@@ -41,7 +41,7 @@
 
             <div class="form-group mt-3 mb-3">
               <label for="emailAddress">Email Address</label>
-              <input required id="emailAddress" class="form-control" type="text" name="emailAddress" placeholder="Email Address"/>
+              <input required id="emailAddress" class="form-control" type="email" name="emailAddress" placeholder="Email Address"/>
             </div>
 
             <div class="form-group mt-3 mb-3">
@@ -61,12 +61,24 @@
             </div>
           </div>
 
+          <p class="text-danger small" id="error"></p>
+          <p class="text-success small" id="success"></p>
+
           <div class="d-flex justify-content-end">
-            <button class="btn btn-primary" type="submit">Create</button>
+            <button class="btn btn-primary" type="submit" id="createButton">Create</button>
           </div>
+
         </form>
+
+        <div id='spinner' style='display:none' class="position-absolute top-50 start-50 translate-middle">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+
       </div>
     </main>
+
     <script src="public/js/registration.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
   </body>
