@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Render, Req, Res } from '@nestjs/common';
 import type { Request, Response } from 'express';
+import { createDirectoryName } from 'src/utils/directory';
 import { hashPassword } from 'src/utils/hashing';
 import { RegistrationService } from './registration.service';
 
@@ -36,6 +37,7 @@ export class RegistrationController {
         password: body.password,
       });
       if (createdUser) {
+        this.service.createDirectory(createDirectoryName(body));
         res.status(200);
         res.json({
           msg: 'User Created Successfully',
