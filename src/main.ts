@@ -2,6 +2,7 @@
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as session from 'express-session';
+import * as cookie from 'cookie-parser';
 import { join } from 'path';
 import { AppModule } from './app.module';
 
@@ -15,6 +16,7 @@ async function bootstrap() {
     resave: false,
     }),
   );
+  app.use(cookie());
   app.useStaticAssets(join(__dirname, '..', 'public'), {
     index: false,
     prefix: '/public',

@@ -13,16 +13,16 @@ export class UsersService {
     });
   }
 
-  // async setAPIKey(uuid: string, id: number) {
-  //   this.prisma.user.update({
-  //     where: {
-  //       id: id,
-  //     },
-  //     data: {
-  //       apiKey: uuid,
-  //     }
-  //   });
-  // }
+  async setAPIKey(uuid: string, id: number): Promise<User> {
+    return this.prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        apiKey: uuid,
+      },
+    });
+  }
 
   async createUser(data: Prisma.UserCreateInput): Promise<User> {
     return await this.prisma.user.create({ data });

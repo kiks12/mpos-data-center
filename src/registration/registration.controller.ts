@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Render, Req, Res } from '@nestjs/common';
 import type { Request, Response } from 'express';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { UsersService } from 'src/users/users.service';
 import { generateUUID } from 'src/utils/apiKey';
 import { createDirectoryName } from 'src/utils/directory';

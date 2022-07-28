@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
-import { generateUUID } from 'src/utils/apiKey';
+// import { generateUUID } from 'src/utils/apiKey';
 import { decryptPassword } from 'src/utils/hashing';
 
 @Injectable()
@@ -9,13 +9,17 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.userService.findUser(email);
+
+    if (!user) {
+      return 'Account not Found';
+    }
+
     const passwordMatch = await decryptPassword(password, user.password);
     if (user && passwordMatch) {
       const { password, ...result } = user;
-      const uuid = generateUUID();
       return result;
     }
 
-    return null;
+    return 'Incorrect Password';
   }
 }
