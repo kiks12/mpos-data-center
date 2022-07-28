@@ -1,5 +1,9 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Render, Req, Res } from '@nestjs/common';
 import type { Request, Response } from 'express';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { UsersService } from 'src/users/users.service';
+import { generateUUID } from 'src/utils/apiKey';
 import { createDirectoryName } from 'src/utils/directory';
 import { hashPassword } from 'src/utils/hashing';
 import { RegistrationService } from './registration.service';
@@ -15,7 +19,7 @@ interface CreateUserRequestBody {
 
 @Controller('registration')
 export class RegistrationController {
-  constructor(private service: RegistrationService) {}
+  constructor(private service: RegistrationService, private userService: UsersService) {}
 
   @Get()
   @Render('registration')
@@ -28,13 +32,15 @@ export class RegistrationController {
     const body: CreateUserRequestBody = req.body;
     body.password = await hashPassword(body.password);
     try {
-      const createdUser = await this.service.createUser({
+      const uuid = generateUUID();
+      const createdUser = await this.userService.createUser({
         firstName: body.firstName,
         lastName: body.lastName,
         middleName: body.middleName,
         contactNumber: body.contactNumber,
         emailAddress: body.emailAddress,
         password: body.password,
+        apiKey: uuid,
       });
       if (createdUser) {
         this.service.createDirectory(createDirectoryName(body));
