@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RegistrationController } from './registration/registration.controller';
@@ -11,6 +16,7 @@ import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { LoginController } from './login/login.controller';
 import { LoginModule } from './login/login.module';
+import { LoginMiddleware } from './login/loginMiddleware';
 
 @Module({
   imports: [RegistrationModule, UsersModule, AuthModule, LoginModule],
@@ -22,4 +28,10 @@ import { LoginModule } from './login/login.module';
   ],
   providers: [AppService, RegistrationService, PrismaService, AuthService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoginMiddleware)
+      .forRoutes({ path: '/', method: RequestMethod.GET });
+  }
+}

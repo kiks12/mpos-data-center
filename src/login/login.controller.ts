@@ -28,12 +28,17 @@ export class LoginController {
   async loginCallback(@Req() req: Request, @Res() res: Response) {
     if (typeof req.user === 'string') {
       res.status(400);
-      return res.send(req.user);
+      return res.send({
+        msg: req.user,
+      });
     }
 
     const { id } = req.user as any;
     const uuid = generateUUID();
-    const { apiKey, ...result } = await this.usersService.setAPIKey(uuid, id);
+    const { apiKey, password, ...result } = await this.usersService.setAPIKey(
+      uuid,
+      id,
+    );
     const finalAPIKey = await hashPassword(apiKey);
 
     res.cookie('uuid', finalAPIKey, {
@@ -42,7 +47,7 @@ export class LoginController {
 
     res.status(200);
     return res.send({
-      result,
+      ...result,
       uuid: finalAPIKey,
     });
   }
