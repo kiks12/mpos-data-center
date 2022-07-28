@@ -32,6 +32,9 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(LoginMiddleware)
-      .forRoutes({ path: '/', method: RequestMethod.GET });
+      .forRoutes(
+        { path: '/', method: RequestMethod.GET },
+        { path: 'login', method: RequestMethod.GET },
+      );
   }
 }

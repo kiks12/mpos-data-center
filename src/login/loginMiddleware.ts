@@ -8,9 +8,11 @@ export class LoginMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     if (!req.cookies.uuid) {
       res.redirect('/login');
+      return;
     }
     if (req.path === '/login' && req.cookies.uuid) {
       res.redirect('/');
+      return;
     } 
     next();
   }
