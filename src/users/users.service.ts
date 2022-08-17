@@ -13,6 +13,22 @@ export class UsersService {
     });
   }
 
+  async findUserByID(id: number) {
+    return this.prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+    });
+  }
+
+  async findUserByUUID(uuid: string) {
+    return this.prisma.user.findFirst({
+      where: {
+        apiKey: uuid,
+      },
+    });
+  }
+
   async setAPIKey(uuid: string, id: number): Promise<User> {
     return this.prisma.user.update({
       where: {

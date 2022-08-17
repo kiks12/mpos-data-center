@@ -17,9 +17,16 @@ import { AuthModule } from './auth/auth.module';
 import { LoginController } from './login/login.controller';
 import { LoginModule } from './login/login.module';
 import { LoginMiddleware } from './login/loginMiddleware';
+import { BackupModule } from './backup/backup.module';
 
 @Module({
-  imports: [RegistrationModule, UsersModule, AuthModule, LoginModule],
+  imports: [
+    RegistrationModule,
+    UsersModule,
+    AuthModule,
+    LoginModule,
+    BackupModule,
+  ],
   controllers: [
     AppController,
     RegistrationController,
