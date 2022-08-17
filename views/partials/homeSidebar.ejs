@@ -1,0 +1,46 @@
+<div style="width: 100%; height: 100vh;">
+
+  <!-- Sidebar -->
+  <nav id="sidebarMenu" class="d-lg-block sidebar h-100 bg-white shadow">
+    <div class="position-sticky">
+      <div class="list-group list-group-flush mx-3 pt-4">
+        
+        <a href="#">
+          <div class="d-flex justify-content-center align-items-center mb-3 list-group-item-action p-2 rounded" style="cursor: pointer;">
+            <div class="rounded-circle bg-light border d-flex justify-content-center align-items-center text-primary" style="width: 2.5em; height: 2.5em;">
+              <%= thumbnailLetter %>
+            </div>
+            <div class="mx-2"><%= fullname %></div>
+          </div>
+        </a>
+        
+        <% if (activePage == 'Home') { %>
+        <a href="/" class="list-group-item list-group-item-action py-2 border-0 rounded active" aria-current="true">
+          <i class=""></i><span>Home<span>
+        </a>
+        <% } else {%>
+        <a href="/" class="list-group-item list-group-item-action border-0 py-2 rounded" aria-current="true">
+          <i class=""></i><span>Home<span>
+        </a>
+        <% } %>
+
+        <% if (activePage == 'Settings') { %>
+        <a href="/" class="list-group-item list-group-item-action border-0 py-2 rounded active" aria-current="true">
+          <i class=""></i><span>Settings<span>
+        </a>
+        <% } else {%>
+        <a href="/" class="list-group-item list-group-item-action border-0 py-2 rounded" aria-current="true">
+          <i class=""></i><span>Settings<span>
+        </a>
+        <% } %>
+        
+        <a href="/login/logout" class="list-group-item list-group-item-action border-0 py-2 rounded" aria-current="true">
+          <i class=""></i><span>Logout<span>
+        </a>
+
+      </div>
+    </div>
+  </nav>
+  <!-- Sidebar -->
+
+</div>
