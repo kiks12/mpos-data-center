@@ -1,0 +1,10 @@
+
+.grid-container {
+  display: grid!important;
+  grid-template-columns: 20% 60% 20%!important;
+  gap: 1em!important;
+}
+
+a {
+  text-decoration: none;
+}
