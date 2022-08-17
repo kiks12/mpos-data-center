@@ -2,12 +2,16 @@ import {
   Controller,
   Post,
   Res,
+  StreamableFile,
   UploadedFiles,
   UseInterceptors,
+  Req,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { Response } from 'express';
+import { Request, Response } from 'express';
+import { createReadStream } from 'fs';
 import { diskStorage } from 'multer';
+import { join } from 'path';
 import { getDateToday } from 'src/utils/dateGetter';
 import { createDirectoryName } from 'src/utils/directory';
 
@@ -45,5 +49,13 @@ export class BackupController {
     });
   }
 
-  // @Get('')
+  @Post('download')
+  async getFile(@Req() req: Request): Promise<StreamableFile> {
+    const { filename } = req.body;
+    const userDirectoryName = createDirectoryName(req.user);
+    const file = createReadStream(
+      join(process.cwd(), `/public/users/${userDirectoryName}/${filename}`),
+    );
+    return new StreamableFile(file);
+  }
 }
