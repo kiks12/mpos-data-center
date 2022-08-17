@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
-// import { generateUUID } from 'src/utils/apiKey';
 import { decryptPassword } from 'src/utils/hashing';
 
 @Injectable()

@@ -8,6 +8,14 @@ export const hashPassword = async (str: string): Promise<string> => {
   return hashed;
 }
 
+export const hashAPIKey = async (str: string): Promise<string> => {
+  return await hashPassword(str);
+}
+
 export const decryptPassword = async (str: string, encrypted: string): Promise<boolean> => {
+  return await compare(str, encrypted);
+}
+
+export const decruptAPIKey = async (str: string, encrypted: string): Promise<boolean> => {
   return await compare(str, encrypted);
 }

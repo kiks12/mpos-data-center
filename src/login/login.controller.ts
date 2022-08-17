@@ -11,7 +11,7 @@ import { Request, Response } from 'express';
 import { LocalAuthGuard } from 'src/auth/local.auth.guard';
 import { UsersService } from 'src/users/users.service';
 import { generateUUID } from 'src/utils/apiKey';
-import { hashPassword } from 'src/utils/hashing';
+import { hashAPIKey } from 'src/utils/hashing';
 
 @Controller('login')
 export class LoginController {
@@ -39,7 +39,7 @@ export class LoginController {
       uuid,
       id,
     );
-    const finalAPIKey = await hashPassword(apiKey);
+    const finalAPIKey = await hashAPIKey(apiKey);
 
     res.cookie('uuid', finalAPIKey, {
       httpOnly: true,
