@@ -1,4 +1,5 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Render, Req } from '@nestjs/common';
+import { Request } from 'express';
 import { AppService } from './app.service';
 
 @Controller()
@@ -7,7 +8,15 @@ export class AppController {
 
   @Get()
   @Render('index')
-  root() {
-    return;
+  async root(@Req() req: Request) {
+    const uuid = req.cookies.uuid;
+    const { lastName, firstName } = await this.appService.getUserFullNameByUUID(
+      uuid,
+    );
+    return {
+      activePage: 'Home',
+      fullname: `${lastName}, ${firstName}`,
+      thumbnailLetter: firstName[0],
+    };
   }
 }

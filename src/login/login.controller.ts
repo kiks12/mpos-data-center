@@ -51,10 +51,18 @@ export class LoginController {
   }
 
   @Post('logout')
-  async logout(@Req() req: Request, @Res() res: Response) {
+  async postLogout(@Req() req: Request, @Res() res: Response) {
     res.clearCookie('uuid', {
       httpOnly: true,
     });
     res.send(true);
+  }
+
+  @Get('logout')
+  async getLogout(@Res() res: Response) {
+    res.clearCookie('uuid', {
+      httpOnly: true,
+    });
+    res.redirect('/');
   }
 }
