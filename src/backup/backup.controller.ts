@@ -12,7 +12,7 @@ import { Request, Response } from 'express';
 import { createReadStream } from 'fs';
 import { diskStorage } from 'multer';
 import { join } from 'path';
-import { getDateToday } from 'src/utils/dateGetter';
+// import { getDateToday } from 'src/utils/dateGetter';
 import { createDirectoryName } from 'src/utils/directory';
 
 @Controller('backup')
@@ -26,7 +26,7 @@ export class BackupController {
           callback(null, `./public/users/${directoryName}`);
         },
         filename(req, file, callback) {
-          callback(null, `${getDateToday()}-${file.originalname}`);
+          callback(null, `${file.originalname}`);
         },
       }),
     }),

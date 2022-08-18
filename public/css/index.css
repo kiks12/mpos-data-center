@@ -1,8 +1,8 @@
 
 .grid-container {
   display: grid!important;
-  grid-template-columns: 20% 60% 20%!important;
-  gap: 1em!important;
+  grid-template-columns: 18% 64% 18%!important;
+  gap: 0.5em!important;
 }
 
 a {
