@@ -13,12 +13,19 @@ datasource db {
 }
 
 model User {
-  id            Int    @id @default(autoincrement())
+  id            Int        @id @default(autoincrement())
   firstName     String
   middleName    String
   lastName      String
   contactNumber String
-  emailAddress  String @unique
+  emailAddress  String     @unique
   password      String
   apiKey        String
+  Defaults      Defaults[]
+}
+
+model Defaults {
+  id     Int  @id @default(autoincrement())
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
 }
