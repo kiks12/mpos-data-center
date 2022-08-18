@@ -7,12 +7,18 @@
         
         <a href="#">
           <div class="d-flex justify-content-center align-items-center mb-3 list-group-item-action p-2 rounded" style="cursor: pointer;">
-            <div class="rounded-circle bg-light border d-flex justify-content-center align-items-center text-primary" style="width: 2.5em; height: 2.5em;">
+            <div class="rounded-circle bg-light border d-flex justify-content-center align-items-center text-primary" style="width: 2.5em; height: 2.2em;">
               <%= thumbnailLetter %>
             </div>
-            <div class="mx-2"><%= fullname %></div>
+            <small class="mx-2 text-sm"><%= fullname %></small>
           </div>
         </a>
+
+        <div class="w-100 mb-1 shadow-sm border d-flex btn btn-light d-flex align-items-center justify-content-center text-primary" style="height: 7vh; border-radius: 15em;">
+          Upload
+        </div>
+
+        <div class="border border-right-0 border-left-0 border-bottom-0 my-4"></div>
         
         <% if (activePage == 'Home') { %>
         <a href="/" class="list-group-item list-group-item-action py-2 border-0 rounded active" aria-current="true">
