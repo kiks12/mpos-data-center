@@ -42,7 +42,9 @@ export class RegistrationController {
         apiKey: uuid,
       });
       if (createdUser) {
-        this.service.createDirectory(createDirectoryName(body));
+        const directoryName = createDirectoryName(body);
+        this.service.createDirectory(directoryName);
+        this.service.createSecondLevelDirs(directoryName);
         res.status(200);
         res.json({
           msg: 'User Created Successfully',
