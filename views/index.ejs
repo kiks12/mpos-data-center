@@ -21,7 +21,7 @@
     <%- include ('./partials/searchBar.ejs') %>
 
     <div class="container">
-      <h3>Store Details</h3>
+      <h4>Store Details</h4>
       <div class="d-flex flex-wrap">
         <% if (storeDetailFiles.length !== 0) { %> 
           <% storeDetailFiles.forEach((file) => { %>
@@ -34,7 +34,7 @@
     </div>
 
     <div class="container my-5">
-      <h3>Accounts</h3>
+      <h4>Accounts</h4>
       <div class="d-flex flex-wrap">
         <% if (accountFiles.length !== 0) { %> 
           <% accountFiles.forEach((file) => { %>
@@ -47,7 +47,7 @@
     </div>
 
     <div class="container">
-      <h3>Inventory</h3>
+      <h4>Inventory</h4>
       <div class="d-flex flex-wrap">
         <% if (inventoryFiles.length !== 0) { %> 
           <% inventoryFiles.forEach((file) => { %>
@@ -60,7 +60,7 @@
     </div>
 
     <div class="container my-5">
-      <h3>Transactions</h3>
+      <h4>Transactions</h4>
       <div class="d-flex flex-wrap">
         <% if (transactionFiles.length !== 0) { %> 
           <% transactionFiles.forEach((file) => { %>
@@ -73,7 +73,7 @@
     </div>
 
     <div class="container">
-      <h3>Attendance</h3>
+      <h4>Attendance</h4>
       <div class="d-flex flex-wrap">
         <% if (attendanceFiles.length !== 0) { %> 
           <% attendanceFiles.forEach((file) => { %>
@@ -86,7 +86,7 @@
     </div>
 
     <div class="container my-5">
-      <h3>Expiration Date</h3>
+      <h4>Expiration Date</h4>
       <div class="d-flex flex-wrap">
         <% if (expirationDateFiles.length !== 0) { %> 
           <% expirationDateFiles.forEach((file) => { %>
@@ -99,7 +99,7 @@
     </div>
 
     <div class="container">
-      <h3>Others</h3>
+      <h4>Others</h4>
       <div class="d-flex flex-wrap">
         <% if (otherFiles.length !== 0) { %> 
           <% otherFiles.forEach((file) => { %>
@@ -114,7 +114,6 @@
   </main>
 
 
-  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </body>
 </html>
