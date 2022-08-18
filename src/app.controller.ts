@@ -18,30 +18,39 @@ export class AppController {
       directoryName,
       'Store-Details',
     );
+
     const accountFiles = await this.appService.getUserDirectoryFiles(
       directoryName,
       'Accounts',
     );
+
     const expirationDateFiles = await this.appService.getUserDirectoryFiles(
       directoryName,
       'Expiration-Dates',
     );
+
     const transactionFiles = await this.appService.getUserDirectoryFiles(
       directoryName,
       'Transactions',
     );
+
     const inventoryFiles = await this.appService.getUserDirectoryFiles(
       directoryName,
       'Inventory',
     );
+
     const attendanceFiles = await this.appService.getUserDirectoryFiles(
       directoryName,
       'Attendance',
     );
+
     const otherFiles = await this.appService.getUserDirectoryFiles(
       directoryName,
       'Others',
     );
+
+    const defaultFiles = await this.appService.getDefaultFiles(uuid);
+
     return {
       activePage: 'Home',
       fullname: `${lastName}, ${firstName}`,
@@ -53,6 +62,7 @@ export class AppController {
       inventoryFiles,
       attendanceFiles,
       otherFiles,
+      defaultFiles,
     };
   }
 }

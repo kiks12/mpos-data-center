@@ -40,6 +40,18 @@ export class UsersService {
     });
   }
 
+  async getDefaultFilesByUUID(uuid: string) {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        apiKey: uuid,
+      },
+      include: {
+        Defaults: true,
+      },
+    });
+    return user.Defaults;
+  }
+
   async createUser(data: Prisma.UserCreateInput): Promise<User> {
     return await this.prisma.user.create({ data });
   }

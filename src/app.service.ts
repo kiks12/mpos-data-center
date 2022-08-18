@@ -38,4 +38,9 @@ export class AppService {
       };
     });
   }
+
+  async getDefaultFiles(uuid: string): Promise<any> {
+    const defaultFiles = await this.userService.getDefaultFilesByUUID(uuid);
+    return defaultFiles;
+  }
 }

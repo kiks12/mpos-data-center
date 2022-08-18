@@ -5,6 +5,12 @@
     <div class="position-sticky">
       <div class="list-group list-group-flush mx-3 pt-4">
         <h3>Defaults</h3>
+
+        <% if (defaultFiles.length !== 0) { %> 
+          <!--  -->
+        <% } else { %> 
+          <small>No Default Files Yet</small>
+        <% } %>
       </div>
     </div>
   </nav>
