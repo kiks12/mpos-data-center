@@ -20,10 +20,95 @@
   <main>
     <%- include ('./partials/searchBar.ejs') %>
 
-    <div class="d-flex flex-wrap">
-      <% files.forEach((file) => { %>
-        <%- include ('./partials/file.ejs', { file: file }) %>
-      <% }) %>
+    <div class="container">
+      <h3>Store Details</h3>
+      <div class="d-flex flex-wrap">
+        <% if (storeDetailFiles.length !== 0) { %> 
+          <% storeDetailFiles.forEach((file) => { %>
+            <%- include ('./partials/file.ejs', { file: file }) %>
+          <% }) %>
+        <% } else { %> 
+          <p>No Files</p>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="container my-5">
+      <h3>Accounts</h3>
+      <div class="d-flex flex-wrap">
+        <% if (accountFiles.length !== 0) { %> 
+          <% accountFiles.forEach((file) => { %>
+            <%- include ('./partials/file.ejs', { file: file }) %>
+          <% }) %>
+        <% } else { %> 
+          <p>No Files</p>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="container">
+      <h3>Inventory</h3>
+      <div class="d-flex flex-wrap">
+        <% if (inventoryFiles.length !== 0) { %> 
+          <% inventoryFiles.forEach((file) => { %>
+            <%- include ('./partials/file.ejs', { file: file }) %>
+          <% }) %>
+        <% } else { %> 
+          <p>No Files</p>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="container my-5">
+      <h3>Transactions</h3>
+      <div class="d-flex flex-wrap">
+        <% if (transactionFiles.length !== 0) { %> 
+          <% transactionFiles.forEach((file) => { %>
+            <%- include ('./partials/file.ejs', { file: file }) %>
+          <% }) %>
+        <% } else { %> 
+          <p>No Files</p>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="container">
+      <h3>Attendance</h3>
+      <div class="d-flex flex-wrap">
+        <% if (attendanceFiles.length !== 0) { %> 
+          <% attendanceFiles.forEach((file) => { %>
+            <%- include ('./partials/file.ejs', { file: file }) %>
+          <% }) %>
+        <% } else { %> 
+          <p>No Files</p>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="container my-5">
+      <h3>Expiration Date</h3>
+      <div class="d-flex flex-wrap">
+        <% if (expirationDateFiles.length !== 0) { %> 
+          <% expirationDateFiles.forEach((file) => { %>
+            <%- include ('./partials/file.ejs', { file: file }) %>
+          <% }) %>
+        <% } else { %> 
+          <p>No Files</p>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="container">
+      <h3>Others</h3>
+      <div class="d-flex flex-wrap">
+        <% if (otherFiles.length !== 0) { %> 
+          <% otherFiles.forEach((file) => { %>
+            <%- include ('./partials/file.ejs', { file: file }) %>
+          <% }) %>
+        <% } else { %> 
+          <p>No Files</p>
+        <% } %>
+      </div>
     </div>
 
   </main>

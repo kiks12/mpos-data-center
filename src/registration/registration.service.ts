@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
-const NEEDED_DIRS = ['Store-Details', 'Accounts', 'Transactions', 'Inventory', 'Expiration-Dates', 'Attendance'];
+const NEEDED_DIRS = ['Store-Details', 'Accounts', 'Transactions', 'Inventory', 'Expiration-Dates', 'Attendance', 'Others'];
 
 @Injectable()
 export class RegistrationService {

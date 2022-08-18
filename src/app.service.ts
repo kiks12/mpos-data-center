@@ -21,11 +21,21 @@ export class AppService {
     return createDirectoryName(user);
   }
 
-  async getUserDirectoryFiles(directoryName: string): Promise<any> {
+  async getUserDirectoryFiles(
+    directoryName: string,
+    secondDir: string,
+  ): Promise<any> {
     const files = fs.readdirSync(
-      join(__dirname, '..', 'public/users/', directoryName),
+      join(__dirname, '..', 'public/users/', directoryName, secondDir),
     );
 
-    return files;
+    return files.map((file) => {
+      return {
+        filename: file,
+        extension: file.slice(
+          (Math.max(0, file.lastIndexOf('.')) || Infinity) + 1,
+        ),
+      };
+    });
   }
 }

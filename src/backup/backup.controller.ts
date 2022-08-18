@@ -22,8 +22,9 @@ export class BackupController {
     FilesInterceptor('files', 10, {
       storage: diskStorage({
         destination(req, file, callback) {
+          const { dir } = req.query;
           const directoryName = createDirectoryName(req.user);
-          callback(null, `./public/users/${directoryName}`);
+          callback(null, `./public/users/${directoryName}/${dir}`);
         },
         filename(req, file, callback) {
           callback(null, `${file.originalname}`);

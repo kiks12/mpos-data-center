@@ -14,20 +14,45 @@ export class AppController {
       uuid,
     );
     const directoryName = await this.appService.getDirectoryNameByUUID(uuid);
-    const files = await this.appService.getUserDirectoryFiles(directoryName);
-    const processedFiles = files.map((file) => {
-      return {
-        filename: file,
-        extension: file.slice(
-          (Math.max(0, file.lastIndexOf('.')) || Infinity) + 1,
-        ),
-      };
-    });
+    const storeDetailFiles = await this.appService.getUserDirectoryFiles(
+      directoryName,
+      'Store-Details',
+    );
+    const accountFiles = await this.appService.getUserDirectoryFiles(
+      directoryName,
+      'Accounts',
+    );
+    const expirationDateFiles = await this.appService.getUserDirectoryFiles(
+      directoryName,
+      'Expiration-Dates',
+    );
+    const transactionFiles = await this.appService.getUserDirectoryFiles(
+      directoryName,
+      'Transactions',
+    );
+    const inventoryFiles = await this.appService.getUserDirectoryFiles(
+      directoryName,
+      'Inventory',
+    );
+    const attendanceFiles = await this.appService.getUserDirectoryFiles(
+      directoryName,
+      'Attendance',
+    );
+    const otherFiles = await this.appService.getUserDirectoryFiles(
+      directoryName,
+      'Others',
+    );
     return {
       activePage: 'Home',
       fullname: `${lastName}, ${firstName}`,
       thumbnailLetter: firstName[0],
-      files: processedFiles,
+      storeDetailFiles,
+      accountFiles,
+      expirationDateFiles,
+      transactionFiles,
+      inventoryFiles,
+      attendanceFiles,
+      otherFiles,
     };
   }
 }
