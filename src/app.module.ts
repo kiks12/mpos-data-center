@@ -18,6 +18,9 @@ import { LoginController } from './login/login.controller';
 import { LoginModule } from './login/login.module';
 import { LoginMiddleware } from './login/loginMiddleware';
 import { BackupModule } from './backup/backup.module';
+import { FilesService } from './files/files.service';
+import { DefaultsModule } from './defaults/defaults.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -26,6 +29,8 @@ import { BackupModule } from './backup/backup.module';
     AuthModule,
     LoginModule,
     BackupModule,
+    DefaultsModule,
+    FilesModule,
   ],
   controllers: [
     AppController,
@@ -33,7 +38,7 @@ import { BackupModule } from './backup/backup.module';
     BackupController,
     LoginController,
   ],
-  providers: [AppService, RegistrationService, PrismaService, AuthService],
+  providers: [AppService, RegistrationService, PrismaService, AuthService, FilesService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

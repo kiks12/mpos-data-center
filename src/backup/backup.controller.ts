@@ -12,11 +12,14 @@ import { Request, Response } from 'express';
 import { createReadStream } from 'fs';
 import { diskStorage } from 'multer';
 import { join } from 'path';
-// import { getDateToday } from 'src/utils/dateGetter';
+import { DefaultFileType } from 'src/defaults/defaults.service';
+import { FilesService } from 'src/files/files.service';
 import { createDirectoryName } from 'src/utils/directory';
 
 @Controller('backup')
 export class BackupController {
+  constructor(private readonly filesService: FilesService) {}
+
   @Post('upload')
   @UseInterceptors(
     FilesInterceptor('files', 10, {
@@ -35,7 +38,11 @@ export class BackupController {
   async uploadCsv(
     @UploadedFiles() files: Array<Express.Multer.File>,
     @Res() res: Response,
+    @Req() req: Request,
   ) {
+    const uuid = req.headers.authorization.split(' ')[1];
+    const { dir } = req.query;
+    const path = files[0].path;
     if (files.length === 0) {
       res.status(400);
       res.json({
@@ -44,9 +51,16 @@ export class BackupController {
       return;
     }
 
+    const defaultFile = await this.filesService.setUserDefaultFileByUUID(
+      uuid,
+      path,
+      dir.toString() as DefaultFileType,
+    );
+
     res.status(200);
     res.json({
       msg: 'SUCCESS: Files Uploaded',
+      file: defaultFile,
     });
   }
 
