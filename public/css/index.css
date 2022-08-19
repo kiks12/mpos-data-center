@@ -8,3 +8,11 @@
 a {
   text-decoration: none;
 }
+
+small {
+  font-size: 0.7em!important;
+}
+
+span {
+  font-size: 0.85em!important;
+}
