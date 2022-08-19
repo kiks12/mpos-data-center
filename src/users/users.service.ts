@@ -18,6 +18,9 @@ export class UsersService {
       where: {
         id: id,
       },
+      include: {
+        Defaults: true,
+      },
     });
   }
 
@@ -25,6 +28,9 @@ export class UsersService {
     return this.prisma.user.findFirst({
       where: {
         apiKey: uuid,
+      },
+      include: {
+        Defaults: true,
       },
     });
   }
