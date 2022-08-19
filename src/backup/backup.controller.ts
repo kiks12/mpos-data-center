@@ -21,12 +21,12 @@ export class BackupController {
   @UseInterceptors(
     FilesInterceptor('files', 10, {
       storage: diskStorage({
-        destination(req, file, callback) {
+        destination(req, _file, callback) {
           const { dir } = req.query;
           const directoryName = createDirectoryName(req.user);
           callback(null, `./public/users/${directoryName}/${dir}`);
         },
-        filename(req, file, callback) {
+        filename(_req, file, callback) {
           callback(null, `${file.originalname}`);
         },
       }),
@@ -36,7 +36,7 @@ export class BackupController {
     @UploadedFiles() files: Array<Express.Multer.File>,
     @Res() res: Response,
   ) {
-    if (!files) {
+    if (files.length === 0) {
       res.status(400);
       res.json({
         msg: 'ERROR: Files Not Uploaded Properly. Please try again Later',
