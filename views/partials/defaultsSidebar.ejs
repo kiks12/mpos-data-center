@@ -1,16 +1,34 @@
 <div class="position-sticky sticky-top" style="width: 100%; height: 100vh;">
 
   <!-- Sidebar -->
-  <nav class="d-lg-block sidebar h-100 bg-white border ">
+  <nav class="d-lg-block sidebar h-100 border">
     <div class="position-sticky">
       <div class="list-group list-group-flush mx-3 pt-4">
-        <h3>Defaults</h3>
+
+        <div class="d-flex flex-column w-100 mb-4">
+          <h3>Defaults</h3>
+          <small class="text-secondary">
+            These files will be streamed to your mobile device when 
+            <strong class="text-primary">Restoring Data.</strong>
+          </small>
+        </div>
+
 
         <% if (defaultFiles.length !== 0) { %> 
-          <!--  -->
+          <div class="d-flex flex-column">
+            <% defaultFiles.forEach((file) => { %> 
+              <div class="w-100 d-flex flex-column my-1">
+                <small><%= file.type %></small>
+                <%- include ('./file.ejs', { file: file }) %>
+              </div>
+            <% }) %>
+          </div>
+
         <% } else { %> 
           <small>No Default Files Yet</small>
         <% } %>
+
+
       </div>
     </div>
   </nav>

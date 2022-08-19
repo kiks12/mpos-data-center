@@ -41,6 +41,16 @@ export class AppService {
 
   async getDefaultFiles(uuid: string): Promise<any> {
     const defaultFiles = await this.userService.getDefaultFilesByUUID(uuid);
-    return defaultFiles;
+    return defaultFiles.map((file) => {
+      const filePath = file.path.split('/');
+      const filename = filePath[filePath.length - 1];
+      return {
+        filename,
+        extension: filename.slice(
+          (Math.max(0, filename.lastIndexOf('.')) || Infinity) + 1,
+        ),
+        type: file.type,
+      };
+    });
   }
 }
