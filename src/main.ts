@@ -5,7 +5,6 @@ import * as session from 'express-session';
 import * as cookie from 'cookie-parser';
 import { join } from 'path';
 import { AppModule } from './app.module';
-// import * as hbs from 'hbs';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);

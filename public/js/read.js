@@ -9,8 +9,8 @@ const modalCard = document.getElementById('modalCard');
 const closeModalButton = document.getElementById('closeModalBtn');
 const message = document.getElementById('message');
 
-const SET_DEFAULT_FILE_API_ENDPOINT = 'http://localhost:3000/backup/set-default/';
-const DELETE_FILE_API_ENDPOINT = 'http://localhost:3000/backup/delete/';
+const SET_DEFAULT_FILE_API_ENDPOINT = '/backup/set-default/';
+const DELETE_FILE_API_ENDPOINT = '/backup/delete/';
 
 let isDelete = false;
 
