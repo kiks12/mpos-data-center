@@ -21,6 +21,8 @@ import { BackupModule } from './backup/backup.module';
 import { FilesService } from './files/files.service';
 import { DefaultsModule } from './defaults/defaults.module';
 import { FilesModule } from './files/files.module';
+import { SettingsController } from './settings/settings.controller';
+import { SettingsModule } from './settings/settings.module';
 
 @Module({
   imports: [
@@ -31,12 +33,14 @@ import { FilesModule } from './files/files.module';
     BackupModule,
     DefaultsModule,
     FilesModule,
+    SettingsModule,
   ],
   controllers: [
     AppController,
     RegistrationController,
     BackupController,
     LoginController,
+    SettingsController,
   ],
   providers: [AppService, RegistrationService, PrismaService, AuthService, FilesService],
 })
