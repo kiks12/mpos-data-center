@@ -23,6 +23,9 @@ import { DefaultsModule } from './defaults/defaults.module';
 import { FilesModule } from './files/files.module';
 import { SettingsController } from './settings/settings.controller';
 import { SettingsModule } from './settings/settings.module';
+import { ReadController } from './read/read.controller';
+import { ReadService } from './read/read.service';
+import { ReadModule } from './read/read.module';
 
 @Module({
   imports: [
@@ -34,6 +37,7 @@ import { SettingsModule } from './settings/settings.module';
     DefaultsModule,
     FilesModule,
     SettingsModule,
+    ReadModule,
   ],
   controllers: [
     AppController,
@@ -41,8 +45,9 @@ import { SettingsModule } from './settings/settings.module';
     BackupController,
     LoginController,
     SettingsController,
+    ReadController,
   ],
-  providers: [AppService, RegistrationService, PrismaService, AuthService, FilesService],
+  providers: [AppService, RegistrationService, PrismaService, AuthService, FilesService, ReadService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

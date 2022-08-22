@@ -5,6 +5,12 @@
   gap: 0.5em!important;
 }
 
+.grid-container-2 {
+  display: grid!important;
+  grid-template-columns: 17% auto!important;
+  gap: 0.5em!important;
+}
+
 a {
   text-decoration: none;
 }

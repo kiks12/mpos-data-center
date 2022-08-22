@@ -35,6 +35,8 @@ export class AppService {
         extension: file.slice(
           (Math.max(0, file.lastIndexOf('.')) || Infinity) + 1,
         ),
+        directoryName: directoryName,
+        secondDir: secondDir,
       };
     });
   }
