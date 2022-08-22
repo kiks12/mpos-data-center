@@ -13,6 +13,7 @@ export class FilesService {
     private readonly userService: UsersService,
   ) {}
 
+  // EXAMPLE path - public/users/Francis James_Tolentino-francistolentino1107@gmail.com/Store-Details/2022-08-22-store-details.csv
   async setUserDefaultFileByUUID(
     uuid: string,
     path: string,

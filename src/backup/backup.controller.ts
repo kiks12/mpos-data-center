@@ -66,6 +66,32 @@ export class BackupController {
     });
   }
 
+  @Post('set-default')
+  async setDefault(@Req() req: Request, @Res() res: Response) {
+    try {
+      const uuid = req.headers.authorization.split(' ')[1];
+      const { path, type } = req.body;
+      const defaultFile = await this.filesService.setUserDefaultFileByUUID(
+        uuid,
+        path,
+        type.toString() as DefaultFileType,
+      );
+
+      res.status(200);
+      res.json({
+        msg: `Successfully set this file to be the Default File for your ${type} table`,
+        file: defaultFile,
+      });
+      return;
+    } catch (e) {
+      console.error(e);
+      res.status(400);
+      res.json({
+        msg: `ERROR: ${e}`,
+      });
+    }
+  }
+
   @Post('download')
   async getFile(@Req() req: Request): Promise<StreamableFile> {
     const { filename } = req.body;

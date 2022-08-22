@@ -12,6 +12,18 @@
 
 <body class="grid-container-2">
 
+  <div class="modal-container" id="modal">
+    <div class="modal-card" id="modalCard">
+      <div class="modal-title">
+        <h3>Message</h3>
+        <button id="closeModalBtn" class="btn btn-light text-danger h-100 border">close</button>
+      </div>
+      <div class="modal-content">
+        <small id="message">adslfhskdfhs</small>
+      </div>
+    </div>
+  </div>
+
   <%- include ('./partials/homeSidebar.ejs', {
       activePage: activePage,
       fullname: fullname,
@@ -21,7 +33,14 @@
   <main>
     <%- include ('./partials/searchBar.ejs') %>
 
-    <%- include ('./partials/readControlPanel.ejs', { type: type }) %>
+    <%- include ('./partials/readControlPanel.ejs', 
+        { 
+          type: type,
+          path: path,
+          filename: filename,
+        }
+      ) 
+    %>
 
     <div class="w-100 px-3 py-2">
       <table class="table table-striped">
@@ -57,5 +76,7 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+  <script src="public/js/read.js"></script>
 </body>
 </html>

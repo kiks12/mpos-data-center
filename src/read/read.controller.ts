@@ -33,6 +33,8 @@ export class ReadController {
       thumbnailLetter: firstName[0],
       csv: csv,
       type: secondDir,
+      path: `public/users/${directory}/${secondDir}/${file}`,
+      filename: file,
     });
   }
 }
