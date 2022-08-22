@@ -24,6 +24,7 @@ async function bootstrap() {
   });
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('ejs');
+  app.enableCors();
 
   await app.listen(process.env.PORT || 3000);
 }
