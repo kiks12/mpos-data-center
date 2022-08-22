@@ -1,0 +1,3 @@
+id,firstName,middleName,lastName,isAdmin,emailAddress,contactNumber,password
+2,Francis James ,Sigua,Tolentino,true,francistolentino1107@gmail.com,9482791258,kiko
+3,admin,admin,admin,true,admin,120930132903,admin
