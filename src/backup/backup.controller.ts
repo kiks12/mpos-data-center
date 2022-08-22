@@ -7,6 +7,7 @@ import {
   UseInterceptors,
   Req,
   Get,
+  Delete,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { Defaults } from '@prisma/client';
@@ -112,5 +113,23 @@ export class BackupController {
     );
     const file = createReadStream(join(process.cwd(), defaultFile.path));
     return new StreamableFile(file);
+  }
+
+  @Delete('delete')
+  async deleteFile(@Req() req: Request, @Res() res: Response): Promise<void> {
+    const { path } = req.body;
+    const deleted = this.filesService.deleteUserFile(path);
+    if (!deleted) {
+      res.status(400);
+      res.json({
+        msg: 'There seems to be a problem deleting this file, Please try again later.',
+      });
+      return;
+    }
+
+    res.status(200);
+    res.json({
+      msg: 'Successfully deleted this file from your data storage',
+    });
   }
 }

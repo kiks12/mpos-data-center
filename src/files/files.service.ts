@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Defaults } from '@prisma/client';
+import { join } from 'path';
+import * as fs from 'fs';
 import {
   DefaultFileType,
   DefaultsService,
@@ -31,5 +33,17 @@ export class FilesService {
   async getUserDefaultFilesByID(id: number): Promise<Defaults[]> {
     const user = await this.userService.findUserByID(id);
     return Promise.resolve(user.Defaults);
+  }
+
+  // EXAMPLE path - public/users/Francis James_Tolentino-francistolentino1107@gmail.com/Store-Details/2022-08-22-store-details.c
+  async deleteUserFile(path: string): Promise<boolean> {
+    const finalPath = join(__dirname, '..', '..', path);
+    try {
+      fs.unlinkSync(finalPath);
+      return Promise.resolve(true);
+    } catch (e) {
+      console.error(e);
+      return Promise.resolve(false);
+    }
   }
 }
