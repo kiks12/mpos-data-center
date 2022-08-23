@@ -10,46 +10,42 @@ export class AppController {
   async root(@Req() req: Request, @Res() res: Response) {
     try {
       const uuid = req.cookies.uuid;
-      const { lastName, firstName } =
+      const { lastName, firstName, id } =
         await this.appService.getUserFullNameByUUID(uuid);
 
-      const directoryName = await this.appService.getDirectoryNameByUUID(uuid);
-      const storeDetailFiles = await this.appService.getUserDirectoryFiles(
-        directoryName,
-        'Store-Details',
+      const storeDetailFiles = await this.appService.getUserFilesByType(
+        id,
+        'STORE_DETAILS',
       );
 
-      const accountFiles = await this.appService.getUserDirectoryFiles(
-        directoryName,
-        'Accounts',
+      const accountFiles = await this.appService.getUserFilesByType(
+        id,
+        'ACCOUNTS',
       );
 
-      const expirationDateFiles = await this.appService.getUserDirectoryFiles(
-        directoryName,
-        'Expiration-Dates',
+      const expirationDateFiles = await this.appService.getUserFilesByType(
+        id,
+        'EXPIRATION_DATES',
       );
 
-      const transactionFiles = await this.appService.getUserDirectoryFiles(
-        directoryName,
-        'Transactions',
+      const transactionFiles = await this.appService.getUserFilesByType(
+        id,
+        'TRANSACTIONS',
       );
 
-      const inventoryFiles = await this.appService.getUserDirectoryFiles(
-        directoryName,
-        'Inventory',
+      const inventoryFiles = await this.appService.getUserFilesByType(
+        id,
+        'INVENTORY',
       );
 
-      const attendanceFiles = await this.appService.getUserDirectoryFiles(
-        directoryName,
-        'Attendance',
+      const attendanceFiles = await this.appService.getUserFilesByType(
+        id,
+        'ATTENDANCE',
       );
 
-      const otherFiles = await this.appService.getUserDirectoryFiles(
-        directoryName,
-        'Others',
-      );
+      const otherFiles = await this.appService.getUserFilesByType(id, 'OTHERS');
 
-      const defaultFiles = await this.appService.getDefaultFiles(uuid);
+      const defaultFiles = await this.appService.getDefaultFiles(id);
 
       res.status(200);
       return res.render('index', {
@@ -66,7 +62,6 @@ export class AppController {
         defaultFiles,
       });
     } catch (e) {
-      //
       res.status(400);
       return res.json({
         error: e,

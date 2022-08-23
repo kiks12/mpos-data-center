@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { FilesService } from './files/files.service';
 import { UsersService } from './users/users.service';
-import * as fs from 'fs';
-import { join } from 'path';
-import { createDirectoryName } from './utils/directory';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly userService: UsersService) {}
+  constructor(
+    private readonly userService: UsersService,
+    private readonly fileService: FilesService,
+  ) {}
 
   async getUserFullNameByUUID(uuid: string): Promise<any> {
     const { firstName, lastName } = await this.userService.findUserByUUID(uuid);
@@ -16,36 +17,26 @@ export class AppService {
     };
   }
 
-  async getDirectoryNameByUUID(uuid: string): Promise<string> {
-    const user = await this.userService.findUserByUUID(uuid);
-    return createDirectoryName(user);
-  }
-
-  async getUserDirectoryFiles(
-    directoryName: string,
-    secondDir: string,
-  ): Promise<any> {
-    const files = fs.readdirSync(
-      join(__dirname, '..', 'public/users/', directoryName, secondDir),
-    );
+  async getUserFilesByType(id: number, type: string): Promise<any> {
+    const files = await this.fileService.getUserFileByType(id, type);
 
     return files.map((file) => {
       return {
-        filename: file,
-        extension: file.slice(
-          (Math.max(0, file.lastIndexOf('.')) || Infinity) + 1,
+        filename: file.filename,
+        extension: file.filename.slice(
+          (Math.max(0, file.filename.lastIndexOf('.')) || Infinity) + 1,
         ),
-        directoryName: directoryName,
-        secondDir: secondDir,
+        directoryName: file.filename,
+        secondDir: type,
       };
     });
   }
 
-  async getDefaultFiles(uuid: string): Promise<any> {
-    const defaultFiles = await this.userService.getDefaultFilesByUUID(uuid);
+  async getDefaultFiles(id: number): Promise<any> {
+    const defaultFiles = await this.fileService.getUserDefaultFilesByID(id);
+
     return defaultFiles.map((file) => {
-      const filePath = file.path.split('/');
-      const filename = filePath[filePath.length - 1];
+      const filename = file.filename;
       return {
         filename,
         extension: filename.slice(

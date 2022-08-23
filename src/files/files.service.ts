@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Defaults, Prisma } from '@prisma/client';
+import { File, Prisma } from '@prisma/client';
 import { join } from 'path';
 import * as fs from 'fs';
 import {
@@ -32,9 +32,30 @@ export class FilesService {
     return Promise.resolve(defaultFile);
   }
 
-  async getUserDefaultFilesByID(id: number): Promise<Defaults[]> {
-    const user = await this.userService.findUserByID(id);
-    return Promise.resolve(user.Defaults);
+  async getUserFileByType(id: number, type: string): Promise<File[]> {
+    const files = await this.prismaService.file.findMany({
+      where: {
+        AND: {
+          userId: id,
+          type: type,
+        },
+      },
+    });
+
+    return files;
+  }
+
+  async getUserDefaultFilesByID(id: number): Promise<File[]> {
+    const files = await this.prismaService.file.findMany({
+      where: {
+        AND: {
+          userId: id,
+          isDefault: true,
+        },
+      },
+    });
+
+    return files;
   }
 
   // EXAMPLE path - public/users/Francis James_Tolentino-francistolentino1107@gmail.com/Store-Details/2022-08-22-store-details.c
