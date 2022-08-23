@@ -7,7 +7,6 @@ import {
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RegistrationController } from './registration/registration.controller';
-import { RegistrationService } from './registration/registration.service';
 import { RegistrationModule } from './registration/registration.module';
 import { PrismaService } from './prisma/prisma.service';
 import { BackupController } from './backup/backup.controller';
@@ -26,6 +25,7 @@ import { SettingsModule } from './settings/settings.module';
 import { ReadController } from './read/read.controller';
 import { ReadService } from './read/read.service';
 import { ReadModule } from './read/read.module';
+import { UploadController } from './upload/upload.controller';
 
 @Module({
   imports: [
@@ -46,8 +46,15 @@ import { ReadModule } from './read/read.module';
     LoginController,
     SettingsController,
     ReadController,
+    UploadController,
   ],
-  providers: [AppService, RegistrationService, PrismaService, AuthService, FilesService, ReadService],
+  providers: [
+    AppService,
+    PrismaService,
+    AuthService,
+    FilesService,
+    ReadService,
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
