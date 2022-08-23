@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Defaults } from '@prisma/client';
+import { Defaults, Prisma } from '@prisma/client';
 import { join } from 'path';
 import * as fs from 'fs';
 import {
@@ -7,12 +7,14 @@ import {
   DefaultsService,
 } from 'src/defaults/defaults.service';
 import { UsersService } from 'src/users/users.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class FilesService {
   constructor(
     private readonly defaultService: DefaultsService,
     private readonly userService: UsersService,
+    private readonly prismaService: PrismaService,
   ) {}
 
   // EXAMPLE path - public/users/Francis James_Tolentino-francistolentino1107@gmail.com/Store-Details/2022-08-22-store-details.csv
@@ -45,5 +47,35 @@ export class FilesService {
       console.error(e);
       return Promise.resolve(false);
     }
+  }
+
+  async addFile(data: Prisma.FileUncheckedCreateInput) {
+    try {
+      return await this.prismaService.file.create({
+        data: data,
+        include: {
+          user: true,
+        },
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async removeFileAsDefault(where: any) {
+    try {
+      return await this.prismaService.file.updateMany({
+        where: where,
+        data: {
+          isDefault: false,
+        },
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async readFile(path: string) {
+    return Promise.resolve(fs.readFileSync(path));
   }
 }

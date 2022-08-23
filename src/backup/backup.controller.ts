@@ -3,13 +3,13 @@ import {
   Post,
   Res,
   StreamableFile,
-  UploadedFiles,
   UseInterceptors,
   Req,
   Get,
   Delete,
+  UploadedFile,
 } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { Defaults } from '@prisma/client';
 import { Request, Response } from 'express';
 import { createReadStream } from 'fs';
@@ -17,54 +17,75 @@ import { diskStorage } from 'multer';
 import { join } from 'path';
 import { DefaultFileType } from 'src/defaults/defaults.service';
 import { FilesService } from 'src/files/files.service';
+import { UsersService } from 'src/users/users.service';
 import { createDirectoryName } from 'src/utils/directory';
+// import * as fs from 'fs';
+// import { getDateToday } from 'src/utils/dateGetter';
 
 @Controller('backup')
 export class BackupController {
-  constructor(private readonly filesService: FilesService) {}
+  constructor(
+    private readonly filesService: FilesService,
+    private readonly userService: UsersService,
+  ) {}
 
   @Post('upload')
   @UseInterceptors(
-    FilesInterceptor('files', 10, {
+    FileInterceptor('file', {
       storage: diskStorage({
-        destination(req, _file, callback) {
-          const { dir } = req.query;
-          const directoryName = createDirectoryName(req.user);
-          callback(null, `./public/users/${directoryName}/${dir}`);
+        destination(_req, _file, callback) {
+          callback(null, `./public/uploads`);
         },
         filename(_req, file, callback) {
-          callback(null, `${file.originalname}`);
+          callback(null, `${Date.now().toString()}-${file.originalname}`);
         },
       }),
     }),
   )
   async uploadCsv(
-    @UploadedFiles() files: Array<Express.Multer.File>,
+    @UploadedFile() file: Express.Multer.File,
     @Res() res: Response,
     @Req() req: Request,
   ) {
-    const uuid = req.headers.authorization.split(' ')[1];
-    const { dir } = req.query;
-    const path = files[0].path;
-    if (files.length === 0) {
-      res.status(400);
-      res.json({
-        msg: 'ERROR: Files Not Uploaded Properly. Please try again Later',
+    try {
+      const uuid = req.headers.authorization.split(' ')[1];
+      const { type } = req.query;
+
+      const user = await this.userService.findUserByUUID(uuid);
+
+      const path = join(__dirname, '..', '..', file.path);
+      const bytes = await this.filesService.readFile(path);
+
+      const previousDefault = await this.filesService.removeFileAsDefault({
+        AND: {
+          userId: user.id,
+          isDefault: true,
+          type: type as string,
+        },
       });
-      return;
+
+      const uploadedFile = await this.filesService.addFile({
+        filename: file.originalname,
+        bytes: bytes,
+        type: type as string,
+        userId: user.id,
+        isDefault: true,
+      });
+
+      res.status(200);
+      res.json({
+        msg: 'SUCCESS: Files Uploaded',
+        file,
+        uploadedFile,
+        previousDefault,
+      });
+    } catch (e) {
+      console.error(e);
+      res.status(400);
+      return res.json({
+        error: e,
+      });
     }
-
-    const defaultFile = await this.filesService.setUserDefaultFileByUUID(
-      uuid,
-      path,
-      dir.toString() as DefaultFileType,
-    );
-
-    res.status(200);
-    res.json({
-      msg: 'SUCCESS: Files Uploaded',
-      file: defaultFile,
-    });
   }
 
   @Post('set-default')
