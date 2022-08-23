@@ -3,9 +3,7 @@ import { Controller, Get, Post, Render, Req, Res } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { UsersService } from 'src/users/users.service';
 import { generateUUID } from 'src/utils/apiKey';
-import { createDirectoryName } from 'src/utils/directory';
 import { hashPassword } from 'src/utils/hashing';
-import { RegistrationService } from './registration.service';
 
 interface CreateUserRequestBody {
   firstName: string;
@@ -18,7 +16,7 @@ interface CreateUserRequestBody {
 
 @Controller('registration')
 export class RegistrationController {
-  constructor(private service: RegistrationService, private userService: UsersService) {}
+  constructor(private readonly userService: UsersService) {}
 
   @Get()
   @Render('registration')
@@ -42,9 +40,6 @@ export class RegistrationController {
         apiKey: uuid,
       });
       if (createdUser) {
-        const directoryName = createDirectoryName(body);
-        this.service.createDirectory(directoryName);
-        this.service.createSecondLevelDirs(directoryName);
         res.status(200);
         res.json({
           msg: 'User Created Successfully',

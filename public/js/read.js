@@ -2,7 +2,7 @@
 const deleteButton = document.getElementById('deleteBtn');
 const setDefaultButton = document.getElementById('setAsDefaultBtn');
 const type = document.getElementById('type');
-const path = document.getElementById('path');
+const id = document.getElementById('id');
 // const filename = document.getElementById('filename');
 const modalContainer = document.getElementById('modal');
 const modalCard = document.getElementById('modalCard');
@@ -17,8 +17,8 @@ let isDelete = false;
 const setDefaultFile = async (e) => {
   e.preventDefault();
   const data = {
-    path: path.innerHTML.substring(6, path.innerHTML.length),
-    type: type.innerHTML.split(' ')[0],
+    id: Number.parseInt(id.innerHTML.split(' ')[1]),
+    type: type.innerText.split(' ')[0],
   }
 
   const res = await fetch(SET_DEFAULT_FILE_API_ENDPOINT, {
@@ -39,7 +39,7 @@ const setDefaultFile = async (e) => {
 const deleteFile = async (e) => {
   e.preventDefault();
   const data = {
-    path: path.innerHTML.substring(6, path.innerHTML.length),
+    id: Number.parseInt(id.innerHTML.split(' ')[1]),
   };
 
   const res = await fetch(DELETE_FILE_API_ENDPOINT, {

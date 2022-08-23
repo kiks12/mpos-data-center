@@ -4,12 +4,13 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { UsersService } from 'src/users/users.service';
 
 export type DefaultFileType =
-  | 'Accounts'
-  | 'Store-Details'
-  | 'Transactions'
-  | 'Expiration-Dates'
-  | 'Inventory'
-  | 'Attendance';
+  | 'ACCOUNTS'
+  | 'STORE_DETAILS'
+  | 'TRANSACTIONS'
+  | 'EXPIRATION_DATES'
+  | 'INVENTORY'
+  | 'ATTENDANCE'
+  | 'OTHERS';
 
 @Injectable()
 export class DefaultsService {

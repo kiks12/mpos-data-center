@@ -1,29 +1,60 @@
 
-<a href="/read?file=<%=file.filename%>&secondDir=<%=file.secondDir%>&directory=<%=file.directoryName%>&extension=<%=file.extension%>">
-  <div class="w-100 my-1 d-flex flex-row align-items-center btn btn-light" style="min-height: 8.5vh; border: 0.1px solid rgb(177, 177, 177)">
-    <div class="bg-white shadow-sm rounded d-flex justify-content-center align-items-center text-light" style="min-height: 6.5vh; min-width: 4vw;">
-      
-      <% if (file.extension === 'csv') { %>
-        <h5 class="text-primary">
-          <%= file.extension %>
-        </h5>
-      <% } %>
+<a href="/read?id=<%=file.id%>&filename=<%=file.filename%>&extension=<%=file.extension%>&type=<%=file.type%>">
+  <% if (file.default) { %> 
+    <div class="w-100 my-1 d-flex flex-row align-items-center btn" style="background: rgba(4, 101, 219, 0.3);min-height: 8.5vh; border: 0.1px solid rgb(177, 177, 177)">
+      <div class="bg-white shadow-sm rounded d-flex justify-content-center align-items-center text-light" style="min-height: 6.5vh; min-width: 4vw;">
+        
+        <% if (file.extension === 'csv') { %>
+          <h5 class="text-primary">
+            <%= file.extension %>
+          </h5>
+        <% } %>
 
-      <% if (file.extension === 'pdf') { %>
-        <h5 class="text-danger">
-          <%= file.extension %>
-        </h5>
-      <% } %>
+        <% if (file.extension === 'pdf') { %>
+          <h5 class="text-danger">
+            <%= file.extension %>
+          </h5>
+        <% } %>
 
-      <% if (file.extension === 'png' || file.extension === 'jpeg' || file.extension === 'jpg') { %>
-        <h5 class="text-warning">
-          <%= file.extension %>
-        </h5>
-      <% } %>
+        <% if (file.extension === 'png' || file.extension === 'jpeg' || file.extension === 'jpg') { %>
+          <h5 class="text-warning">
+            <%= file.extension %>
+          </h5>
+        <% } %>
 
+      </div>
+
+      <small class="px-2 d-flex flex-wrap">
+        <%= file.filename %>
+      </small>
     </div>
-    <small class="px-2 d-flex flex-wrap">
-      <%= file.filename %>
-    </small>
-  </div>
+  <% } else { %>
+    <div class="w-100 my-1 d-flex flex-row align-items-center btn btn-light" style="min-height: 8.5vh; border: 0.1px solid rgb(177, 177, 177)">
+      <div class="bg-white shadow-sm rounded d-flex justify-content-center align-items-center text-light" style="min-height: 6.5vh; min-width: 4vw;">
+        
+        <% if (file.extension === 'csv') { %>
+          <h5 class="text-primary">
+            <%= file.extension %>
+          </h5>
+        <% } %>
+
+        <% if (file.extension === 'pdf') { %>
+          <h5 class="text-danger">
+            <%= file.extension %>
+          </h5>
+        <% } %>
+
+        <% if (file.extension === 'png' || file.extension === 'jpeg' || file.extension === 'jpg') { %>
+          <h5 class="text-warning">
+            <%= file.extension %>
+          </h5>
+        <% } %>
+
+      </div>
+
+      <small class="px-2 d-flex flex-wrap">
+        <%= file.filename %>
+      </small>
+    </div>
+  <% } %>
 </a>

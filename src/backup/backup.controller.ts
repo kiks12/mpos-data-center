@@ -15,12 +15,8 @@ import { Request, Response } from 'express';
 import { createReadStream } from 'fs';
 import { diskStorage } from 'multer';
 import { join } from 'path';
-import { DefaultFileType } from 'src/defaults/defaults.service';
 import { FilesService } from 'src/files/files.service';
 import { UsersService } from 'src/users/users.service';
-// import { createDirectoryName } from 'src/utils/directory';
-// import * as fs from 'fs';
-// import { getDateToday } from 'src/utils/dateGetter';
 
 @Controller('backup')
 export class BackupController {
@@ -92,23 +88,29 @@ export class BackupController {
   async setDefault(@Req() req: Request, @Res() res: Response) {
     try {
       const uuid = req.headers.authorization.split(' ')[1];
-      const { path, type } = req.body;
-      const defaultFile = await this.filesService.setUserDefaultFileByUUID(
-        uuid,
-        path,
-        type.toString() as DefaultFileType,
-      );
+      const user = await this.userService.findUserByUUID(uuid);
+      const { type, id } = req.body;
+
+      const previousDefault = await this.filesService.removeFileAsDefault({
+        AND: {
+          userId: user.id,
+          isDefault: true,
+          type: type as string,
+        },
+      });
+
+      const defaultFile = await this.filesService.setFileAsDefaultFileByID(id);
 
       res.status(200);
-      res.json({
+      return res.json({
         msg: `Successfully set this file to be the Default File for your ${type} table`,
         file: defaultFile,
+        previousDefault,
       });
-      return;
     } catch (e) {
       console.error(e);
       res.status(400);
-      res.json({
+      return res.json({
         msg: `ERROR: ${e}`,
       });
     }
@@ -141,8 +143,8 @@ export class BackupController {
 
   @Delete('delete')
   async deleteFile(@Req() req: Request, @Res() res: Response): Promise<void> {
-    const { path } = req.body;
-    const deleted = this.filesService.deleteUserFile(path);
+    const { id } = req.body;
+    const deleted = this.filesService.deleteUserFile(id);
     if (!deleted) {
       res.status(400);
       res.json({

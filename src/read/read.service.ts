@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import * as fs from 'fs';
-import { join } from 'path';
+import { FilesService } from 'src/files/files.service';
 
 @Injectable()
 export class ReadService {
-  async readCSVFile(path: string): Promise<string[][]> {
-    const file = fs.readFileSync(
-      join(__dirname, '..', '..', 'public', 'users', path),
-      { encoding: 'utf8', flag: 'r' },
-    );
+  constructor(private readonly fileService: FilesService) {}
+
+  async readCSVFile(id: number): Promise<string[][]> {
+    const fileFromDB = await this.fileService.getSpecificFileByID(id);
+    const buffer = Buffer.from(fileFromDB.bytes);
+    const file = buffer.toString();
 
     const firstLevelSplit = file.split('\n');
     const secondLevelSplit = firstLevelSplit.map((file) => file.split(','));

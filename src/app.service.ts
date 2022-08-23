@@ -22,12 +22,13 @@ export class AppService {
 
     return files.map((file) => {
       return {
+        id: file.id,
         filename: file.filename,
         extension: file.filename.slice(
           (Math.max(0, file.filename.lastIndexOf('.')) || Infinity) + 1,
         ),
-        directoryName: file.filename,
-        secondDir: type,
+        type: type,
+        default: file.isDefault,
       };
     });
   }
@@ -38,11 +39,13 @@ export class AppService {
     return defaultFiles.map((file) => {
       const filename = file.filename;
       return {
+        id: file.id,
         filename,
         extension: filename.slice(
           (Math.max(0, filename.lastIndexOf('.')) || Infinity) + 1,
         ),
         type: file.type,
+        default: file.isDefault,
       };
     });
   }

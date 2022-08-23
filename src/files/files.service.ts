@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { File, Prisma } from '@prisma/client';
-import { join } from 'path';
 import * as fs from 'fs';
 import {
-  DefaultFileType,
+  // DefaultFileType,
   DefaultsService,
 } from 'src/defaults/defaults.service';
 import { UsersService } from 'src/users/users.service';
@@ -18,18 +17,25 @@ export class FilesService {
   ) {}
 
   // EXAMPLE path - public/users/Francis James_Tolentino-francistolentino1107@gmail.com/Store-Details/2022-08-22-store-details.csv
-  async setUserDefaultFileByUUID(
-    uuid: string,
-    path: string,
-    type: DefaultFileType,
-  ) {
-    const defaultFile = await this.defaultService.setUserDefaultFileByUUID(
-      uuid,
-      type,
-      path,
-    );
+  async setFileAsDefaultFileByID(id: number) {
+    const defaultFile = await this.prismaService.file.update({
+      where: {
+        id: id,
+      },
+      data: {
+        isDefault: true,
+      },
+    });
 
     return Promise.resolve(defaultFile);
+  }
+
+  async getSpecificFileByID(id: number): Promise<File> {
+    return await this.prismaService.file.findUnique({
+      where: {
+        id: id,
+      },
+    });
   }
 
   async getUserFileByType(id: number, type: string): Promise<File[]> {
@@ -39,6 +45,9 @@ export class FilesService {
           userId: id,
           type: type,
         },
+      },
+      orderBy: {
+        datetime: 'desc',
       },
     });
 
@@ -53,16 +62,22 @@ export class FilesService {
           isDefault: true,
         },
       },
+      orderBy: {
+        datetime: 'desc',
+      },
     });
 
     return files;
   }
 
   // EXAMPLE path - public/users/Francis James_Tolentino-francistolentino1107@gmail.com/Store-Details/2022-08-22-store-details.c
-  async deleteUserFile(path: string): Promise<boolean> {
-    const finalPath = join(__dirname, '..', '..', path);
+  async deleteUserFile(id: number): Promise<boolean> {
     try {
-      fs.unlinkSync(finalPath);
+      await this.prismaService.file.delete({
+        where: {
+          id: id,
+        },
+      });
       return Promise.resolve(true);
     } catch (e) {
       console.error(e);
