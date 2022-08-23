@@ -5,10 +5,15 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
+
   async findUser(email: string) {
     return this.prisma.user.findFirst({
       where: {
         emailAddress: email,
+      },
+      include: {
+        Defaults: true,
+        Files: true,
       },
     });
   }
@@ -20,6 +25,7 @@ export class UsersService {
       },
       include: {
         Defaults: true,
+        Files: true,
       },
     });
   }
@@ -31,6 +37,7 @@ export class UsersService {
       },
       include: {
         Defaults: true,
+        Files: true,
       },
     });
   }

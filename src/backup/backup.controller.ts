@@ -18,7 +18,7 @@ import { join } from 'path';
 import { DefaultFileType } from 'src/defaults/defaults.service';
 import { FilesService } from 'src/files/files.service';
 import { UsersService } from 'src/users/users.service';
-import { createDirectoryName } from 'src/utils/directory';
+// import { createDirectoryName } from 'src/utils/directory';
 // import * as fs from 'fs';
 // import { getDateToday } from 'src/utils/dateGetter';
 
@@ -115,13 +115,16 @@ export class BackupController {
   }
 
   @Post('download')
-  async getFile(@Req() req: Request): Promise<StreamableFile> {
-    const { filename } = req.body;
-    const userDirectoryName = createDirectoryName(req.user);
-    const file = createReadStream(
-      join(process.cwd(), `/public/users/${userDirectoryName}/${filename}`),
+  async getFile(@Req() req: Request): Promise<any> {
+    const { type } = req.body;
+    const uuid = req.headers.authorization.split(' ')[1];
+    const user = await this.userService.findUserByUUID(uuid);
+    const defaultFile = user.Files.find(
+      (file) => file.type == type && file.isDefault,
     );
-    return new StreamableFile(file);
+    const buffer = Buffer.from(defaultFile.bytes);
+
+    return new StreamableFile(buffer);
   }
 
   @Get('restore')
