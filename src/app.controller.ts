@@ -1,5 +1,5 @@
-import { Controller, Get, Render, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Get, Req, Res } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { AppService } from './app.service';
 
 @Controller()
@@ -7,62 +7,70 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Render('index')
-  async root(@Req() req: Request) {
-    const uuid = req.cookies.uuid;
-    const { lastName, firstName } = await this.appService.getUserFullNameByUUID(
-      uuid,
-    );
-    const directoryName = await this.appService.getDirectoryNameByUUID(uuid);
-    const storeDetailFiles = await this.appService.getUserDirectoryFiles(
-      directoryName,
-      'Store-Details',
-    );
+  async root(@Req() req: Request, @Res() res: Response) {
+    try {
+      const uuid = req.cookies.uuid;
+      const { lastName, firstName } =
+        await this.appService.getUserFullNameByUUID(uuid);
 
-    const accountFiles = await this.appService.getUserDirectoryFiles(
-      directoryName,
-      'Accounts',
-    );
+      const directoryName = await this.appService.getDirectoryNameByUUID(uuid);
+      const storeDetailFiles = await this.appService.getUserDirectoryFiles(
+        directoryName,
+        'Store-Details',
+      );
 
-    const expirationDateFiles = await this.appService.getUserDirectoryFiles(
-      directoryName,
-      'Expiration-Dates',
-    );
+      const accountFiles = await this.appService.getUserDirectoryFiles(
+        directoryName,
+        'Accounts',
+      );
 
-    const transactionFiles = await this.appService.getUserDirectoryFiles(
-      directoryName,
-      'Transactions',
-    );
+      const expirationDateFiles = await this.appService.getUserDirectoryFiles(
+        directoryName,
+        'Expiration-Dates',
+      );
 
-    const inventoryFiles = await this.appService.getUserDirectoryFiles(
-      directoryName,
-      'Inventory',
-    );
+      const transactionFiles = await this.appService.getUserDirectoryFiles(
+        directoryName,
+        'Transactions',
+      );
 
-    const attendanceFiles = await this.appService.getUserDirectoryFiles(
-      directoryName,
-      'Attendance',
-    );
+      const inventoryFiles = await this.appService.getUserDirectoryFiles(
+        directoryName,
+        'Inventory',
+      );
 
-    const otherFiles = await this.appService.getUserDirectoryFiles(
-      directoryName,
-      'Others',
-    );
+      const attendanceFiles = await this.appService.getUserDirectoryFiles(
+        directoryName,
+        'Attendance',
+      );
 
-    const defaultFiles = await this.appService.getDefaultFiles(uuid);
+      const otherFiles = await this.appService.getUserDirectoryFiles(
+        directoryName,
+        'Others',
+      );
 
-    return {
-      activePage: 'Home',
-      fullname: `${lastName}, ${firstName}`,
-      thumbnailLetter: firstName[0],
-      storeDetailFiles,
-      accountFiles,
-      expirationDateFiles,
-      transactionFiles,
-      inventoryFiles,
-      attendanceFiles,
-      otherFiles,
-      defaultFiles,
-    };
+      const defaultFiles = await this.appService.getDefaultFiles(uuid);
+
+      res.status(200);
+      return res.render('index', {
+        activePage: 'Home',
+        fullname: `${lastName}, ${firstName}`,
+        thumbnailLetter: firstName[0],
+        storeDetailFiles,
+        accountFiles,
+        expirationDateFiles,
+        transactionFiles,
+        inventoryFiles,
+        attendanceFiles,
+        otherFiles,
+        defaultFiles,
+      });
+    } catch (e) {
+      //
+      res.status(400);
+      return res.json({
+        error: e,
+      });
+    }
   }
 }
