@@ -45,27 +45,30 @@ export class BackupController {
   ) {
     try {
       const uuid = req.headers.authorization.split(' ')[1];
-      const { type } = req.query;
+      const { type, isDefault } = req.query;
 
       const user = await this.userService.findUserByUUID(uuid);
 
       const path = join(__dirname, '..', '..', file.path);
       const bytes = await this.filesService.readFile(path);
+      let previousDefault = null;
 
-      const previousDefault = await this.filesService.removeFileAsDefault({
-        AND: {
-          userId: user.id,
-          isDefault: true,
-          type: type as string,
-        },
-      });
+      if (isDefault == 'true') {
+        previousDefault = await this.filesService.removeFileAsDefault({
+          AND: {
+            userId: user.id,
+            isDefault: true,
+            type: type as string,
+          },
+        });
+      }
 
       const uploadedFile = await this.filesService.addFile({
         filename: file.originalname,
         bytes: bytes,
         type: type as string,
         userId: user.id,
-        isDefault: true,
+        isDefault: isDefault == 'true',
       });
 
       res.status(200);

@@ -48,11 +48,13 @@
           <h5 class="text-warning">
             <%= file.extension %>
           </h5>
+        <% } else { %>
+          <h5><%+ file.extension %></h5>
         <% } %>
 
       </div>
 
-      <small class="px-2 d-flex flex-wrap">
+      <small class="px-2 d-flex flex-wrap text-truncate">
         <%= file.filename %>
       </small>
     </div>
