@@ -10,9 +10,7 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Defaults } from '@prisma/client';
 import { Request, Response } from 'express';
-import { createReadStream } from 'fs';
 import { diskStorage } from 'multer';
 import { join } from 'path';
 import { FilesService } from 'src/files/files.service';
@@ -135,13 +133,14 @@ export class BackupController {
   @Get('restore')
   async restoreFiles(@Req() req: Request): Promise<StreamableFile> {
     const { type } = req.query;
-    const user = req.user as any;
-    const defaultFiles: Defaults[] = user.Defaults;
-    const defaultFile: Defaults = defaultFiles.find(
-      (file) => file.type === type,
+    const uuid = req.headers.authorization.split(' ')[1];
+    const user = await this.userService.findUserByUUID(uuid);
+    const defaultFile = user.Files.find(
+      (file) => file.type == type && file.isDefault,
     );
-    const file = createReadStream(join(process.cwd(), defaultFile.path));
-    return new StreamableFile(file);
+    const buffer = Buffer.from(defaultFile.bytes);
+
+    return new StreamableFile(buffer);
   }
 
   @Delete('delete')
