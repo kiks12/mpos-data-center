@@ -49,4 +49,21 @@ export class AppService {
       };
     });
   }
+
+  async searchFiles(filename: string): Promise<any> {
+    const searchedFiles = await this.fileService.searchFile(filename);
+
+    return searchedFiles.map((file) => {
+      const filename = file.filename;
+      return {
+        id: file.id,
+        filename,
+        extension: filename.slice(
+          (Math.max(0, filename.lastIndexOf('.')) || Infinity) + 1,
+        ),
+        type: file.type,
+        default: file.isDefault,
+      };
+    });
+  }
 }

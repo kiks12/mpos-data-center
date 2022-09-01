@@ -130,4 +130,17 @@ export class FilesService {
       return false;
     }
   }
+
+  async searchFile(filename: string) {
+    return await this.prismaService.file.findMany({
+      where: {
+        filename: {
+          contains: filename,
+        },
+      },
+      include: {
+        user: true,
+      },
+    });
+  }
 }

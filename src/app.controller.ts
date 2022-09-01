@@ -10,8 +10,11 @@ export class AppController {
   async root(@Req() req: Request, @Res() res: Response) {
     try {
       const uuid = req.cookies.uuid;
+      const { search } = req.query;
       const { lastName, firstName, id } =
         await this.appService.getUserFullNameByUUID(uuid);
+
+      let searchedFiles = [];
 
       const storeDetailFiles = await this.appService.getUserFilesByType(
         id,
@@ -47,6 +50,10 @@ export class AppController {
 
       const defaultFiles = await this.appService.getDefaultFiles(id);
 
+      if (search && search.length !== 0) {
+        searchedFiles = await this.appService.searchFiles(search as string);
+      }
+
       res.status(200);
       return res.render('index', {
         activePage: 'Home',
@@ -60,6 +67,8 @@ export class AppController {
         attendanceFiles,
         otherFiles,
         defaultFiles,
+        searchedFiles,
+        isSearch: search && search.length !== 0,
       });
     } catch (e) {
       res.status(400);
