@@ -10,10 +10,13 @@ export class AppService {
   ) {}
 
   async getUserFullNameByUUID(uuid: string): Promise<any> {
-    const { firstName, lastName } = await this.userService.findUserByUUID(uuid);
+    const { firstName, lastName, id } = await this.userService.findUserByUUID(
+      uuid,
+    );
     return {
       firstName,
       lastName,
+      id,
     };
   }
 

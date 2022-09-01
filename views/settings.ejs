@@ -18,13 +18,101 @@
       thumbnailLetter: thumbnailLetter,
     }) %>
   
-  <main>
-    <h2>
-      Settings
-    </h2>
+  <main class="p-5">
+    <form class="form-group">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+          <div class="border border-primary rounded-circle bg-primary d-flex justify-content-center align-items-center" style="width: 4em; height: 4em;">
+            <h4 class="text-light"><%= thumbnailLetter %></h4>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 mx-3">
+            <h5><%= fullname %></h5>
+            <small>Your Personal Account</small>
+          </div>
+        </div>
+
+        <div class="d-flex">
+          <button class="btn btn-sm btn-outline-secondary">Clear Files</button>
+          <button id="deleteAccountButton" class="btn btn-outline-danger btn-sm px-4 mx-2">
+            Delete Account
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-5">
+        <h4>Personal Information</h4>
+        <div class="border border-right-0 border-left-0 border-bottom-0 my-3"></div>
+
+        <div class="d-flex flex-column">
+          <div class="d-flex flex-grow-1 align-items-center mt-4">
+            <div class="flex-grow-1 d-flex flex-column align-items-start">
+              <label for="lastName">
+                <h6>Last Name</h6>
+              </label>
+              <input class="form-control" type="text" name="lastName" id="lastName" value="<%= user.lastName %>"/>
+            </div>
+
+            <div class="flex-grow-1 mx-3 d-flex flex-column align-items-start">
+              <label for="firstName">
+                <h6>First Name</h6>
+              </label>
+              <input class="form-control" type="text" name="firstName" id="firstName" value="<%= user.firstName %>"/>
+            </div>
+
+            <div class="flex-grow-1 d-flex flex-column align-items-start">
+              <label for="middleName">
+                <h6>Middle Name</h6>
+              </label>
+              <input class="form-control" type="text" name="middleName" id="middleName" value="<%= user.middleName %>"/>
+            </div>
+          </div>
+          <small class="mt-1">
+            Your name may appear around the 
+            <strong class="text-primary">
+              MPOS Data Center.
+            </strong>
+            You can change it anytime
+          </small>
+        </div>
+
+        <div class="d-flex flex-column align-items-start my-4">
+          <label for="contactNumber">
+            <h6>Contact Number</h6>
+          </label>
+          <input class="form-control" type="text" name="contactNumber" id="contactNumber" value="<%=user.contactNumber%>"/>
+        </div>
+
+        <div class="d-flex flex-column align-items-start">
+          <label for="contactNumber">
+            <h6>Email Address</h6>
+          </label>
+          <input class="form-control" type="text" name="emailAddress" id="emailAddress" value="<%=user.emailAddress%>"/>
+          <small class="mt-1">
+            This is the
+            <strong class="text-primary">
+              Email Address
+            </strong> that you use when Logging into
+            <strong class="text-primary">
+              MPOS Data Center.
+            </strong>
+          </small>
+        </div>
+
+        <div class="mt-4">
+          <button class="btn btn-sm btn-outline-primary">Change Password</button>
+        </div>
+
+        <div class="mt-2 d-flex justify-content-end">
+          <button id="updateProfileBtn" class="btn btn-sm btn-primary py-2 px-4">Update Profile</button>
+        </div>
+        
+      </div>
+    </form>
   </main>
 
+  <%- include ('./partials/defaultsSidebar.ejs', { defaultFiles: defaultFiles }) %>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+  <script src="public/js/settings.js"></script>
 </body>
 </html>
