@@ -30,11 +30,13 @@ export class SettingsController {
   }
 
   @Patch('updateProfile')
-  async updateProfile(@Req() req: Request, @Res() res: Response) {
+  async updateProfile(
+    @Req() req: Request,
+    @Res() res: Response,
+  ): Promise<void> {
     const { uuid } = req.cookies;
     if (!uuid) {
-      res.redirect('/login/');
-      return;
+      return res.redirect('/login/');
     }
     //
   }
