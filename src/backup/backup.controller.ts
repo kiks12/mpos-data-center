@@ -117,15 +117,17 @@ export class BackupController {
     }
   }
 
-  @Post('download')
-  async getFile(@Req() req: Request): Promise<any> {
-    const { type } = req.body;
-    const uuid = req.headers.authorization.split(' ')[1];
-    const user = await this.userService.findUserByUUID(uuid);
-    const defaultFile = user.Files.find(
-      (file) => file.type == type && file.isDefault,
+  @Get('download')
+  async getFile(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<any> {
+    const { id } = req.query;
+    // const uuid = req.headers.authorization.split(' ')[1];
+    const file = await this.filesService.getSpecificFileByID(
+      Number.parseInt(id.toString()),
     );
-    const buffer = Buffer.from(defaultFile.bytes);
+    const buffer = Buffer.from(file.bytes);
 
     return new StreamableFile(buffer);
   }

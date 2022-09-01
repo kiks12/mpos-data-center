@@ -36,12 +36,16 @@
           <h5 class="text-primary">
             <%= file.extension %>
           </h5>
+        <% } else { %>
+          <h5><%+ file.extension %></h5>
         <% } %>
 
         <% if (file.extension === 'pdf') { %>
           <h5 class="text-danger">
             <%= file.extension %>
           </h5>
+        <% } else { %>
+          <h5><%+ file.extension %></h5>
         <% } %>
 
         <% if (file.extension === 'png' || file.extension === 'jpeg' || file.extension === 'jpg') { %>
