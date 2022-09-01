@@ -24,6 +24,33 @@
     </div>
   </div>
 
+  <div class="modal-container" id="renameModal">
+    <div class="modal-card" id="renameModalCard">
+      <div class="modal-title">
+        <h3>Rename File</h3>
+        <button id="renameCloseModalBtn" class="btn btn-light text-danger h-100 border">close</button>
+      </div>
+      <div class="modal-content">
+        <form id="renameForm">
+          <label for="renameInput">New Filename</label>
+          <div class="d-flex">
+            <input id="renameInput" style="width: 85%;" type='text' class='form-control' required/>
+            <div class="bg-light border-primary text-sm rounded border d-flex justify-content-center align-items-center" style="flex: 1; margin-left: 0.5em;">
+              <small class="text-primary" id="extension">
+                .<%= extension %>
+              </small>
+            </div>
+          </div>
+
+          <small id="renameMessage"></small>
+          <div class="d-flex justify-content-end mt-4 mb-3">
+            <button class="btn btn-primary" id="renameButton">Rename</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <%- include ('./partials/homeSidebar.ejs', {
       activePage: activePage,
       fullname: fullname,

@@ -114,4 +114,20 @@ export class FilesService {
   async readFile(path: string) {
     return Promise.resolve(fs.readFileSync(path));
   }
+
+  async renameFile(id: number, name: string) {
+    try {
+      return await this.prismaService.file.update({
+        where: {
+          id: id,
+        },
+        data: {
+          filename: name,
+        },
+      });
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
 }

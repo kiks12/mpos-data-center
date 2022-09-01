@@ -37,6 +37,7 @@ export class ReadController {
       csv: csv,
       type: type,
       filename: filename,
+      extension: extension,
       id: id,
     });
   }

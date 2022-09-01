@@ -162,4 +162,21 @@ export class BackupController {
       msg: 'Successfully deleted this file from your data storage',
     });
   }
+
+  @Post('rename')
+  async renameFile(@Req() req: Request, @Res() res: Response): Promise<void> {
+    const { id, name } = req.body;
+    const renamedFile = await this.filesService.renameFile(id, name);
+    if (renamedFile) {
+      res.json({
+        msg: 'Successfully renamed your file.',
+        renamedFile,
+      });
+      return;
+    }
+    res.json({
+      msg: 'There seems to be a problem renaming your file. Please try again later.',
+    });
+    return;
+  }
 }
