@@ -36,6 +36,7 @@ export class SettingsController {
       thumbnailLetter: firstName[0],
       defaultFiles,
       user,
+      uuid: req.cookies.uuid ?? '',
     };
   }
 
@@ -96,11 +97,13 @@ export class SettingsController {
         return;
       }
 
+      const deletedFiles = await this.fileService.deleteAllFilesOfUser(user.id);
       const deletedUser = await this.userService.deleteUser(user.id);
       res.status(200);
       res.json({
         msg: 'Successfully deleted your Account.',
         deletedUser,
+        deletedFiles,
       });
       return;
     } catch (e) {
@@ -117,6 +120,7 @@ export class SettingsController {
     try {
       const uuid = req.headers.authorization.split(' ')[1];
       const user = await this.userService.findUserByUUID(uuid);
+
       if (!user) {
         res.status(400);
         res.json({
@@ -140,6 +144,5 @@ export class SettingsController {
       });
       return;
     }
-    //
   }
 }

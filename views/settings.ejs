@@ -12,6 +12,22 @@
 
 <body class="grid-container">
 
+  <div class="modal-container" id="confirmModal">
+    <div class="modal-card" id="confirmModalCard">
+      <div class="modal-title">
+        <h3>Confirm</h3>
+        <button id="closeConfirmModalBtn" class="btn btn-light text-danger h-100 border">close</button>
+      </div>
+      <div class="modal-content">
+        <small id="confirmMessage"></small>
+        <div class="d-flex justify-content-between mt-4">
+          <button id="confirmModalCancelBtn" class="flex-grow-1 mx-1 text-danger btn">Cancel</button>
+          <button id="confirmModalContinueBtn" class="btn btn-primary flex-grow-1 mx-1">Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <%- include ('./partials/homeSidebar.ejs', {
       activePage: activePage,
       fullname: fullname,
@@ -19,7 +35,7 @@
     }) %>
   
   <main class="p-5">
-    <form class="form-group">
+    <form id="settingsForm" action="#" class="form-group">
       <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
           <div class="border border-primary rounded-circle bg-primary d-flex justify-content-center align-items-center" style="width: 4em; height: 4em;">
@@ -27,12 +43,13 @@
           </div>
           <div class="d-flex flex-column flex-grow-1 mx-3">
             <h5><%= fullname %></h5>
+            <input type="hidden" name="uuid" id="uuid" value="<%=uuid%>"/>
             <small>Your Personal Account</small>
           </div>
         </div>
 
         <div class="d-flex">
-          <button id="clearFilesBtn" class="btn btn-sm btn-outline-secondary">Clear Files</button>
+          <button id="clearFilesBtn" class="btn btn-sm btn-outline-secondary px-4">Clear Files</button>
           <button id="deleteAccountBtn" class="btn btn-outline-danger btn-sm px-4 mx-2">
             Delete Account
           </button>
@@ -99,11 +116,15 @@
         </div>
 
         <div class="mt-4">
-          <button class="btn btn-sm btn-outline-primary">Change Password</button>
+          <button type="button" id="changePasswordBtn" class="btn btn-sm btn-outline-primary px-4">Change Password</button>
         </div>
 
         <div class="mt-2 d-flex justify-content-end">
-          <button id="updateProfileBtn" class="btn btn-sm btn-primary py-2 px-4">Update Profile</button>
+          <small id="updateProfileMessage"></small>
+        </div>
+
+        <div class="mt-2 d-flex justify-content-end">
+          <button type="submit" id="updateProfileBtn" class="btn btn-sm btn-primary py-2 px-4">Update Profile</button>
         </div>
         
       </div>
