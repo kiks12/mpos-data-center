@@ -13,6 +13,7 @@ export class SettingsModule implements NestModule {
         '/settings/update-profile/',
         '/settings/delete/',
         '/settings/clear-files',
+        '/settings/change-password',
       );
   }
 }

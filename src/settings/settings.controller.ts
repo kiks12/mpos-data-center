@@ -11,6 +11,7 @@ import { Request, Response } from 'express';
 import { AppService } from 'src/app.service';
 import { FilesService } from 'src/files/files.service';
 import { UsersService } from 'src/users/users.service';
+import { hashPassword } from 'src/utils/hashing';
 
 @Controller('settings')
 export class SettingsController {
@@ -144,5 +145,40 @@ export class SettingsController {
       });
       return;
     }
+  }
+
+  @Patch('change-password')
+  async changePassword(@Req() req: Request, @Res() res: Response) {
+    try {
+      const uuid = req.headers.authorization.split(' ')[1];
+      const user = await this.userService.findUserByUUID(uuid);
+      const { password } = req.body;
+      const hashedPassword = await hashPassword(password);
+
+      if (!user) {
+        res.status(400);
+        res.json({
+          error: 'User cannot be found. Incorrent API key.',
+        });
+        return;
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password: resultPass, ...result } =
+        await this.userService.changeUserPassword(user.id, hashedPassword);
+      res.status(200);
+      res.json({
+        msg: 'Successfully changed your account password. You can use your new password next time you login to MPOS Data Center',
+        result,
+      });
+      return;
+    } catch (e) {
+      console.error(e);
+      res.status(500);
+      res.json({
+        error: e,
+      });
+    }
+    //
   }
 }

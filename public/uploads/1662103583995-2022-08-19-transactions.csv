@@ -1,0 +1,3 @@
+id,transactionID,product,user,quantity,paymentMethod,totalAmount,date,time
+1,1,asdfsdf,admin,1,Cash,10,2022-07-24 00:00:00.000,2022-07-24 13:31:28.651
+2,2,alkfjsdklfj,admin,10,Cash,100,2022-07-24 00:00:00.000,2022-07-24 13:45:02.581
