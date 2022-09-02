@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { File, Prisma } from '@prisma/client';
 import * as fs from 'fs';
-import {
-  // DefaultFileType,
-  DefaultsService,
-} from 'src/defaults/defaults.service';
+import { DefaultsService } from 'src/defaults/defaults.service';
 import { UsersService } from 'src/users/users.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -140,6 +137,14 @@ export class FilesService {
       },
       include: {
         user: true,
+      },
+    });
+  }
+
+  async deleteAllFilesOfUser(id: number) {
+    return await this.prismaService.file.deleteMany({
+      where: {
+        userId: id,
       },
     });
   }

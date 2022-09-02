@@ -1,7 +1,18 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { SettingsMiddleware } from 'src/settings.middleware';
 import { SettingsService } from './settings.service';
 
 @Module({
-  providers: [SettingsService]
+  providers: [SettingsService],
 })
-export class SettingsModule {}
+export class SettingsModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(SettingsMiddleware)
+      .forRoutes(
+        '/settings/update-profile/',
+        '/settings/delete/',
+        '/settings/clear-files',
+      );
+  }
+}
