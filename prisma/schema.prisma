@@ -7,9 +7,9 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // url               = env("DATABASE_URL")
-  url      = env("SHADOW_DATABASE_URL")
-  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  url               = env("DATABASE_URL")
+  // url      = env("SHADOW_DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model User {
@@ -21,7 +21,6 @@ model User {
   emailAddress  String     @unique
   password      String
   apiKey        String
-  Defaults      Defaults[]
   Files         File[]
 }
 
@@ -37,10 +36,3 @@ model File {
   datetime  DateTime @default(now())
 }
 
-model Defaults {
-  id     Int    @id @default(autoincrement())
-  user   User   @relation(fields: [userId], references: [id])
-  userId Int
-  path   String
-  type   String
-}
