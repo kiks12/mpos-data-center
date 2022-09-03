@@ -1,17 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { File, Prisma } from '@prisma/client';
 import * as fs from 'fs';
-import { DefaultsService } from 'src/defaults/defaults.service';
-import { UsersService } from 'src/users/users.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class FilesService {
-  constructor(
-    private readonly defaultService: DefaultsService,
-    private readonly userService: UsersService,
-    private readonly prismaService: PrismaService,
-  ) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
   // EXAMPLE path - public/users/Francis James_Tolentino-francistolentino1107@gmail.com/Store-Details/2022-08-22-store-details.csv
   async setFileAsDefaultFileByID(id: number) {

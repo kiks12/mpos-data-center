@@ -18,7 +18,6 @@ import { LoginModule } from './login/login.module';
 import { LoginMiddleware } from './login/loginMiddleware';
 import { BackupModule } from './backup/backup.module';
 import { FilesService } from './files/files.service';
-import { DefaultsModule } from './defaults/defaults.module';
 import { FilesModule } from './files/files.module';
 import { SettingsController } from './settings/settings.controller';
 import { SettingsModule } from './settings/settings.module';
@@ -34,7 +33,6 @@ import { UploadController } from './upload/upload.controller';
     AuthModule,
     LoginModule,
     BackupModule,
-    DefaultsModule,
     FilesModule,
     SettingsModule,
     ReadModule,
