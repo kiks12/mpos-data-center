@@ -12,7 +12,6 @@ export class UsersService {
         emailAddress: email,
       },
       include: {
-        Defaults: true,
         Files: true,
       },
     });
@@ -24,7 +23,6 @@ export class UsersService {
         id: id,
       },
       include: {
-        Defaults: true,
         Files: true,
       },
     });
@@ -36,7 +34,6 @@ export class UsersService {
         apiKey: uuid,
       },
       include: {
-        Defaults: true,
         Files: true,
       },
     });
@@ -51,18 +48,6 @@ export class UsersService {
         apiKey: uuid,
       },
     });
-  }
-
-  async getDefaultFilesByUUID(uuid: string) {
-    const user = await this.prisma.user.findFirst({
-      where: {
-        apiKey: uuid,
-      },
-      include: {
-        Defaults: true,
-      },
-    });
-    return user.Defaults;
   }
 
   async createUser(data: Prisma.UserCreateInput): Promise<User> {
